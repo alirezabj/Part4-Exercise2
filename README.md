@@ -147,7 +147,7 @@ class TestZipper2 extends Zipper {
     //int idx = 0;
 
     //Modification = list instead of  array
-    List<Book> books = new ArrayList<>();
+    private final List<Book> books = new ArrayList<>();
 
     TestZipper2(String zipFile) throws IOException {
         super(zipFile);
@@ -158,7 +158,7 @@ class TestZipper2 extends Zipper {
         super.run();
 
         // sort books in natural order 
-        Collections.sort(books);
+        books.sort(Comparator.naturalOrder());
 
         System.out.printf("""
 
@@ -208,10 +208,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * A class that extracts books from a ZIP file and sorts them.
- */
+
 public class TestZipper2 extends Zipper {
+    
     private final List<Book> books = new ArrayList<>();
 
     public TestZipper2(String zipFile) throws IOException {
@@ -222,21 +221,21 @@ public class TestZipper2 extends Zipper {
     public void run() throws IOException {
         super.run();
 
-        // Sort books in natural order (by name)
+        // sort books in natural order (by name)
         books.sort(Comparator.naturalOrder());
 
         System.out.printf("""
 
                 Handled %d Books.
                 Books sorted by name:
-                """, books.size());
+                """);
 
-        // Print books sorted by name
+        // print books sorted by name
         for (Book book : books) {
             System.out.println(book);
         }
 
-        // Sort books by line count (secondary order)
+        // sort books by line count (
         books.sort(Comparator.comparingInt(Book::getLineCount));
 
         System.out.printf("""
@@ -244,7 +243,7 @@ public class TestZipper2 extends Zipper {
                 Books sorted by line count:
                 """);
 
-        // Print books sorted by line count
+        // print books sorted by line count
         for (Book book : books) {
             System.out.println(book);
         }

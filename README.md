@@ -46,7 +46,7 @@ class Book {
     }
 
     /*
-     * return the result
+     * return a string with the book's title and line count
      */
     @Override
     public String toString() {

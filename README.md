@@ -20,7 +20,7 @@ class Book {
     /*
      * making a Book object by reading its first line and counting lines
      * @param filePath the path to the file
-     * @throw IOException if an error occurs while reading the file (if it does not exist)
+     * @throws IOException if an error occurs while reading the file (if it does not exist)
      */
     public Book(Path filePath) throws IOException {
         //read the book content from a file

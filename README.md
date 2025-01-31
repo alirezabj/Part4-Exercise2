@@ -162,12 +162,13 @@ class TestZipper2 extends Zipper {
                 Now we could sort it out a bit.
 
                 """, idx);
-    }
 
     // print sorted books
-        for (int i = 0; i < idx; i++) {
+    for (int i = 0; i < idx; i++) {
             System.out.println(books[i]);
     }
+}
+
 
     @Override
     protected Handler createHandler(Path file) {

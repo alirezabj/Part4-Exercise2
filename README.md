@@ -198,6 +198,73 @@ class TestZipper2 extends Zipper {
 In order to sort books by line count, we should modify the run() method in TestZipper2 to first sort by name and then sort by line count. 
 
 ```java
+package fi.utu.tech.ooj.exercise4.exercise2;
+
+import fi.utu.tech.ooj.exercise4.exercise1.Zipper;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+/**
+ * A class that extracts books from a ZIP file and sorts them.
+ */
+public class TestZipper2 extends Zipper {
+    private final List<Book> books = new ArrayList<>();
+
+    public TestZipper2(String zipFile) throws IOException {
+        super(zipFile);
+    }
+
+    @Override
+    public void run() throws IOException {
+        super.run();
+
+        // Sort books in natural order (by name)
+        books.sort(Comparator.naturalOrder());
+
+        System.out.printf("""
+
+                Handled %d Books.
+                Books sorted by name:
+                """, books.size());
+
+        // Print books sorted by name
+        for (Book book : books) {
+            System.out.println(book);
+        }
+
+        // Sort books by line count (secondary order)
+        books.sort(Comparator.comparingInt(Book::getLineCount));
+
+        System.out.printf("""
+
+                Books sorted by line count:
+                """);
+
+        // Print books sorted by line count
+        for (Book book : books) {
+            System.out.println(book);
+        }
+    }
+
+    @Override
+    protected Handler createHandler(Path file) {
+        return new Handler(file) {
+            @Override
+            public void handle() {
+                try {
+                    // Create Book object from file and store it in the list
+                    books.add(new Book(file));
+                } catch (IOException e) {
+                    System.err.println("Failed to read book: " + file);
+                }
+            }
+        };
+    }
+}
 
 ```
 

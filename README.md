@@ -55,3 +55,78 @@ class Book {
 }
 
 ```
+
+
+### B)
+
+In order to implement a natural order for books based on their name, we need to make Book implement Comparable<Book> and define the compareTo method. Then, we can use Java's standard sorting routine (Collections.sort()) to sort a list of books and print them in order.
+
+**`Book` class**
+```java
+
+package fi.utu.tech.ooj.exercise4.exercise2;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+/**
+ * Represents a book stored in a file.
+ * It extracts the book's title (first line) and counts the total number of lines.
+ */
+class Book implements Comparable<Book> {  // Implements Comparable for natural ordering
+    private final String name;
+    private final int lineCount;
+
+    /**
+     * Creates a Book object by reading its first line and counting the number of lines.
+     *
+     * @param filePath The path to the book file.
+     * @throws IOException If an error occurs while reading the file.
+     */
+    public Book(Path filePath) throws IOException {
+        List<String> lines = Files.readAllLines(filePath);
+        this.name = lines.isEmpty() ? "No Title" : lines.get(0);
+        this.lineCount = lines.size();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLineCount() {
+        return lineCount;
+    }
+
+    /**
+     * Defines the natural order of books based on the alphabetical order of their names.
+     * 
+     * @param other The other book to compare with.
+     * @return Negative if this book's name comes first, positive if it comes later, 0 if equal.
+     */
+    @Override
+    public int compareTo(Book other) {
+        return this.name.compareToIgnoreCase(other.name); // Case-insensitive sorting
+    }
+
+    @Override
+    public String toString() {
+        return "Book: '" + name + "' | Lines: " + lineCount;
+    }
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

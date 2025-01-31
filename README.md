@@ -142,8 +142,12 @@ class Book {
 }
 
 class TestZipper2 extends Zipper {
-    Book[] books = new Book[100];
-    int idx = 0;
+    // Original code
+    //Book[] books = new Book[100];
+    //int idx = 0;
+
+    //Modification = list instead of  array
+    List<Book> books = new ArrayList<>();
 
     TestZipper2(String zipFile) throws IOException {
         super(zipFile);
@@ -153,8 +157,8 @@ class TestZipper2 extends Zipper {
     public void run() throws IOException {
         super.run();
 
-        // sort books in natural order
-        Arrays.sort(books, 0, idx, Comparator.nullsLast(Comparator.naturalOrder()));
+        // sort books in natural order 
+        Collections.sort(books);
 
         System.out.printf("""
 
@@ -164,9 +168,9 @@ class TestZipper2 extends Zipper {
                 """, idx);
 
     // print sorted books
-    for (int i = 0; i < idx; i++) {
-            System.out.println(books[i]);
-    }
+        for (Book book : books) {
+            System.out.println(book);
+        }
 }
 
 
@@ -176,8 +180,8 @@ class TestZipper2 extends Zipper {
             @Override
             public void handle() {
                 try {
-                    // create Book object from file
-                    books[idx++] = new Book(file); /
+                    // add new Book to the list
+                    books.add(new Book(file)); 
                 } catch (IOException e) {
                     System.err.println("Failed to read book: " + file);
                 }
@@ -189,7 +193,13 @@ class TestZipper2 extends Zipper {
 ```
 
 
+### C)
 
+In order to sort books by line count, we should modify the run() method in TestZipper2 to first sort by name and then sort by line count. 
+
+```java
+
+```
 
 
 

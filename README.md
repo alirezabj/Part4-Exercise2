@@ -342,7 +342,8 @@ public class Book implements Comparable<Book> {
     */
     @Override
     public String toString() {
-      *****  return "Book: '" + name + "' | Lines: " + lineCount;
+        return "Book: '" + name + "' | Lines: " + lineCount + " | Unique Words: " + uniqueWordCount;
+
     }
 }
 

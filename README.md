@@ -167,7 +167,7 @@ class TestZipper2 extends Zipper {
 
                 """, idx);
 
-    // print sorted books
+        // print sorted books
         for (Book book : books) {
             System.out.println(book);
         }

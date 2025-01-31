@@ -153,6 +153,9 @@ class TestZipper2 extends Zipper {
     public void run() throws IOException {
         super.run();
 
+        // sort books in natural order
+        Arrays.sort(books, 0, idx, Comparator.nullsLast(Comparator.naturalOrder()));
+
         System.out.printf("""
 
                 Handled %d Books.
@@ -161,12 +164,22 @@ class TestZipper2 extends Zipper {
                 """, idx);
     }
 
+    // print sorted books
+        for (int i = 0; i < idx; i++) {
+            System.out.println(books[i]);
+    }
+
     @Override
     protected Handler createHandler(Path file) {
         return new Handler(file) {
             @Override
             public void handle() {
-                books[idx++] = new Book();
+                try {
+                    // create Book object from file
+                    books[idx++] = new Book(file); /
+                } catch (IOException e) {
+                    System.err.println("Failed to read book: " + file);
+                }
             }
         };
     }

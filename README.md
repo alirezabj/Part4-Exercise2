@@ -59,7 +59,7 @@ class Book {
 
 ### B)
 
-In order to implement a natural order for books based on their name, we need to make Book implement Comparable<Book> and define the compareTo method. Then, we can use Java's standard sorting routine (Collections.sort()) to sort a list of books and print them in order.
+In order to implement a natural order for books based on their name, we need to make Book implement Comparable<Book> and define the compareTo method. Then, we can use Java's standard sorting routine to sort a list of books and print them in order.
 
 **`Book` class**
 ```java

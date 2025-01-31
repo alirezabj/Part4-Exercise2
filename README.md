@@ -46,11 +46,11 @@ class Book {
     }
 
     /*
-     * return a string representation of the book
+     * return the result
      */
     @Override
     public String toString() {
-        return String.format("Book: '%s' | Lines: %d", name, lineCount);
+        return "Book: '" + name + "' | Lines: " + lineCount;
     }
 }
 

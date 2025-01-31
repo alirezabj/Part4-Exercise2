@@ -28,7 +28,7 @@ class Book {
         // check if the file contains content. if it contains, the book's name is set as the first line of the file otherwise if the file is empty, it returns No title
         this.name = lines.isEmpty() ? "No Title" : lines.get(0);
         // count the total number of lines
-        this.lineCount = lines.size();
+        this.lineCount =lines.size();
     }
 
     /*

@@ -425,7 +425,63 @@ public class TestZipper2 extends Zipper {
 
 
 ### E) I will answer this part using Part B and D
+
+**Updated ``TestZipper2``**
+
 ```java
+
+package fi.utu.tech.ooj.exercise4.exercise2;
+
+import fi.utu.tech.ooj.exercise4.exercise1.Zipper;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+
+public class TestZipper2 extends Zipper {
+    
+    private final List<Book> books = new ArrayList<>();
+
+    public TestZipper2(String zipFile) throws IOException {
+        super(zipFile);
+    }
+
+
+    @Override
+    public void run() throws IOException {
+        super.run();
+
+       // sort books first by name, then by unique word count                      
+       books.sort(Comparator.comparing(Book::getName).thenComparing(Book::getUniqueWordCount));
+
+        // print sorted books
+        for (Book book : books) {
+            System.out.println(book);
+        }
+
+        
+    }
+
+
+    @Override
+    protected Handler createHandler(Path file) {
+        return new Handler(file) {
+            @Override
+            public void handle() {
+                try {
+                   // add new Book to the list
+                    books.add(new Book(file));
+                } catch (IOException e) {
+                    System.err.println("Failed to read book");
+                }
+            }
+        };
+    }
+}
+
 ```
 
 

@@ -424,7 +424,9 @@ public class TestZipper2 extends Zipper {
 ```
 
 
-### E)
+### E) I will answer this part using Part B and D
+```java
+```
 
 
 

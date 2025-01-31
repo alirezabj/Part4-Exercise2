@@ -32,21 +32,21 @@ class Book {
     }
 
     /*
-     * returns the book's first line of the file
+     * return the book's first line of the file
      */
     public String getName() {
         return name;
     }
 
     /*
-     * returns the number of lines in the book
+     * return the number of lines in the book
      */
     public int getLineCount() {
         return lineCount;
     }
 
     /*
-     * returns a string representation of the book
+     * return a string representation of the book
      */
     @Override
     public String toString() {

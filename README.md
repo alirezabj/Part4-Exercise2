@@ -18,7 +18,7 @@ class Book {
     private final int lineCount; 
 
     /*
-     * making a Book object by reading its first line and counting lines
+     * making a Book object by reading the file content
      * @param filePath the path to the file
      * @throws IOException if an error occurs while reading the file (if it does not exist)
      */
@@ -73,13 +73,15 @@ import java.util.List;
 
 
 // implement comparable for natural ordering
-class Book implements Comparable<Book> {  
+class Book implements Comparable<Book> {
+    // first line of the file
     private final String name;
+    //total number of lines in the file
     private final int lineCount;
 
 
     /*
-     * making a Book object by reading its first line and counting lines
+     * making a Book object by reading the file content
      * @param filePath the path to the file
      * @throws IOException if an error occurs while reading the file (if it does not exist)
      */
@@ -141,10 +143,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-class Book {
-}
 
-class TestZipper2 extends Zipper {
+public class TestZipper2 extends Zipper {
     // Original code
     //Book[] books = new Book[100];
     //int idx = 0;
@@ -161,14 +161,7 @@ class TestZipper2 extends Zipper {
         super.run();
 
         // sort books in natural order 
-        books.sort(Comparator.naturalOrder());
-
-        System.out.printf("""
-
-                Handled %d Books.
-                Now we could sort it out a bit.
-
-                """, idx);
+        Collections.sort(books);
 
         // print sorted books
         for (Book book : books) {
@@ -186,7 +179,7 @@ class TestZipper2 extends Zipper {
                     // add new Book to the list
                     books.add(new Book(file)); 
                 } catch (IOException e) {
-                    System.err.println("Failed to read book: " + file);
+                    System.err.println("Failed to read book");
                 }
             }
         };
@@ -227,27 +220,17 @@ public class TestZipper2 extends Zipper {
     public void run() throws IOException {
         super.run();
 
-        // sort books in natural order (by name)
-        books.sort(Comparator.naturalOrder());
-
-        System.out.printf("""
-
-                Handled %d Books.
-                Books sorted by name:
-                """);
+        // sort books in natural order 
+        Collections.sort(books);
 
         // print books sorted by name
         for (Book book : books) {
             System.out.println(book);
         }
 
-        // sort books by line count (
+        // sort books by line count in ascending order
         books.sort(Comparator.comparingInt(Book::getLineCount));
 
-        System.out.printf("""
-
-                Books sorted by line count:
-                """);
 
         // print books sorted by line count
         for (Book book : books) {
@@ -261,10 +244,10 @@ public class TestZipper2 extends Zipper {
             @Override
             public void handle() {
                 try {
-                    // Create Book object from file and store it in the list
+                    // add new Book to the list
                     books.add(new Book(file));
                 } catch (IOException e) {
-                    System.err.println("Failed to read book: " + file);
+                    System.err.println("Failed to read book");
                 }
             }
         };
@@ -289,89 +272,77 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-/**
- * The Book class represents a book extracted from a file.
- * It contains:
- * - The book's name (first line of the file).
- * - The total number of lines in the file.
- * - The number of unique words in the file.
- * Implements Comparable for natural ordering by book name.
- */
-public class Book implements Comparable<Book> {  
-    private final String name;  // Book title (first line of the file)
-    private final int lineCount;  // Total number of lines in the file
-    private final int uniqueWordCount;  // Unique word count in the file
 
-    /**
-     * Creates a Book object by reading its first line, counting lines, and unique words.
-     * 
-     * @param filePath The path to the book file.
-     * @throws IOException If an error occurs while reading the file.
+public class Book implements Comparable<Book> {
+    // first line of the file
+    private final String name;  
+    //total number of lines in the file
+    private final int lineCount;
+    // unique word count in the file
+    private final int uniqueWordCount;  
+
+
+     /*
+     * making a Book object by reading the file content
+     * @param filePath the path to the file
+     * @throws IOException if an error occurs while reading the file (if it does not exist)
      */
     public Book(Path filePath) throws IOException {
-        // Read all lines from the file
+        //read the book content from a file
         List<String> lines = Files.readAllLines(filePath);
-        // Set book name (first line), or "No Title" if the file is empty
+        // check if the file contains content. if it contains, the book's name is set as the first line of the file otherwise if the file is empty, it returns No title
         this.name = lines.isEmpty() ? "No Title" : lines.get(0);
-        // Count the number of lines in the book
+       // count the total number of lines
         this.lineCount = lines.size();
 
-        // Compute unique word count using a Set
+        // compute unique words
         Pattern wordPattern = Pattern.compile("\\W+");
         this.uniqueWordCount = lines.stream()
-                .flatMap(line -> wordPattern.splitAsStream(line)) // Split into words
-                .filter(word -> !word.isBlank()) // Remove empty strings
-                .map(String::toLowerCase) // Convert to lowercase for uniqueness
-                .collect(Collectors.toSet()) // Store in a Set to remove duplicates
+                .flatMap(line -> wordPattern.splitAsStream(line)) // split into words
+                .filter(word -> !word.isBlank()) // remove empty strings
+                .map(String::toLowerCase) // convert to lowercase 
+                .collect(Collectors.toSet()) // store in a Set to remove duplicates
                 .size();
     }
 
-    /**
-     * Gets the book's name (first line of the file).
-     * 
-     * @return The book's title.
+
+     /*
+     * return the book's first line of the file
      */
     public String getName() {
         return name;
     }
 
-    /**
-     * Gets the number of lines in the book.
-     * 
-     * @return The total line count.
+    /*
+     * return the number of lines in the book
      */
     public int getLineCount() {
         return lineCount;
     }
 
-    /**
-     * Gets the number of unique words in the book.
-     * 
-     * @return The total unique word count.
+    /*
+     * return the total number of unique word 
      */
     public int getUniqueWordCount() {
         return uniqueWordCount;
     }
 
-    /**
-     * Defines the natural order of books based on the alphabetical order of their names.
-     * 
-     * @param other The other book to compare with.
-     * @return A negative number if this book's name comes first, positive if it comes later, 0 if equal.
+     /*
+     * define the natural order of books based on the alphabetical order of their names
+     * @param other the other book to compare with
+     * @return negative if this book's name comes first, positive if it comes later, 0 if equal
      */
     @Override
     public int compareTo(Book other) {
         return this.name.compareTo(other.name);
     }
 
-    /**
-     * Returns a string representation of the book.
-     * 
-     * @return A string containing the book's name, line count, and unique word count.
-     */
+    /*
+    * return a string with the book's title, line count, and unqiur word count
+    */
     @Override
     public String toString() {
-        return String.format("Book: '%s' | Lines: %d | Unique Words: %d", name, lineCount, uniqueWordCount);
+      *****  return "Book: '" + name + "' | Lines: " + lineCount;
     }
 }
 
@@ -392,93 +363,57 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * TestZipper2 extracts a zip file and processes book files inside it.
- * It sorts books in:
- * 1. Natural order (alphabetical order by book name).
- * 2. Ascending order based on the number of lines.
- * 3. Descending order based on unique word count.
- */
+
 public class TestZipper2 extends Zipper {
     
-    // List to store books dynamically
     private final List<Book> books = new ArrayList<>();
 
-    /**
-     * Constructor initializes the Zipper with the given zip file.
-     * 
-     * @param zipFile The path to the zip file.
-     * @throws IOException If an error occurs while processing the zip file.
-     */
     public TestZipper2(String zipFile) throws IOException {
         super(zipFile);
     }
 
-    /**
-     * Runs the extraction, processes books, and sorts them in different orders.
-     * @throws IOException If an error occurs while reading the files.
-     */
+
     @Override
     public void run() throws IOException {
         super.run();
 
-        // Sort books in natural order (by name)
+        // sort books in natural order 
         books.sort(Comparator.naturalOrder());
 
-        System.out.printf("""
-
-                Handled %d Books.
-                Books sorted by name:
-                """, books.size());
-
-        // Print books sorted by name
+        // print books sorted by name
         for (Book book : books) {
             System.out.println(book);
         }
 
-        // Sort books by line count (ascending)
+        // sort books by line count in ascending order
         books.sort(Comparator.comparingInt(Book::getLineCount));
 
-        System.out.printf("""
-
-                Books sorted by line count:
-                """);
 
         // Print books sorted by line count
         for (Book book : books) {
             System.out.println(book);
         }
 
-        // Sort books by unique word count (descending)
+        // sort books by unique word count in descending order
         books.sort(Comparator.comparingInt(Book::getUniqueWordCount).reversed());
 
-        System.out.printf("""
-
-                Books sorted by unique word count:
-                """);
-
-        // Print books sorted by unique word count
+        // print books sorted by unique word count
         for (Book book : books) {
             System.out.println(book);
         }
     }
 
-    /**
-     * Creates a handler to process each extracted file.
-     * 
-     * @param file The path of the file to be processed.
-     * @return A new Handler instance to process the file.
-     */
+
     @Override
     protected Handler createHandler(Path file) {
         return new Handler(file) {
             @Override
             public void handle() {
                 try {
-                    // Create a Book object from the file and store it in the list
+                   // add new Book to the list
                     books.add(new Book(file));
                 } catch (IOException e) {
-                    System.err.println("Failed to read book: " + file);
+                    System.err.println("Failed to read book");
                 }
             }
         };

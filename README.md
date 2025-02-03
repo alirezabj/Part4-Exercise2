@@ -205,6 +205,7 @@ import fi.utu.tech.ooj.exercise4.exercise1.Zipper;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -362,6 +363,7 @@ import fi.utu.tech.ooj.exercise4.exercise1.Zipper;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

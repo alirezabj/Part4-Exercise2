@@ -392,7 +392,7 @@ public class TestZipper2 extends Zipper {
         books.sort(Comparator.comparingInt(Book::getLineCount));
 
 
-        // Print books sorted by line count
+        // print books sorted by line count
         for (Book book : books) {
             System.out.println(book);
         }
@@ -439,6 +439,7 @@ import fi.utu.tech.ooj.exercise4.exercise1.Zipper;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -456,7 +457,7 @@ public class TestZipper2 extends Zipper {
     public void run() throws IOException {
         super.run();
 
-       // sort books first by name, then by unique word count                      
+       // sort books first by name and then by unique word count                      
        books.sort(Comparator.comparing(Book::getName).thenComparing(Book::getUniqueWordCount));
 
         // print sorted books
